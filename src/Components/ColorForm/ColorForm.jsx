@@ -1,12 +1,12 @@
-import "./ColorForm.css";
-import ColorInput from "../ColorInput/ColorInput";
+import './ColorForm.css';
+import ColorInput from '../ColorInput/ColorInput';
 
 export default function ColorForm({
   onSubmitColor,
   initialData = {
-    role: "name your color",
-    hex: "#a47864",
-    contrastText: "#FFFFFF",
+    role: 'color role',
+    hex: '#a47864',
+    contrastText: '#FFFFFF',
   },
 }) {
   function handleSubmit(event) {
@@ -23,12 +23,7 @@ export default function ColorForm({
       <label htmlFor="role">
         Role
         <br />
-        <input
-          type="text"
-          name="role"
-          id="role"
-          defaultValue={initialData.role}
-        />
+        <input type="text" name="role" id="role" defaultValue={initialData.role} />
       </label>
       <br />
       <label htmlFor="hex">
