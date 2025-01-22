@@ -1,20 +1,24 @@
-import { initialColors } from "./lib/colors";
-import Color from "./Components/Color/Color";
-import "./App.css";
-import ColorForm from "./Components/ColorForm/ColorForm";
-import { useState } from "react";
-import { nanoid } from "nanoid";
+import { initialColors } from './lib/colors';
+import Color from './Components/Color/Color';
+import './App.css';
+import ColorForm from './Components/ColorForm/ColorForm';
+import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 function App() {
   const [colors, setColors] = useState(initialColors);
+  const [popup, setPopup] = useState();
 
   function handleSubmitColor(newColor) {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
   function handleDeleteColor(idColorToRemove) {
-    setColors(colors.filter((color) => color.id !== idColorToRemove));
-    console.log("clicking delete");
+    const shouldRemove = confirm('are you sure you want to delete?');
+    if (shouldRemove) {
+      setColors(colors.filter((color) => color.id !== idColorToRemove));
+      console.log('clicking delete');
+    }
   }
 
   return (
@@ -23,13 +27,7 @@ function App() {
       <ColorForm onSubmitColor={handleSubmitColor} />
 
       {colors.map((color) => {
-        return (
-          <Color
-            key={color.id}
-            color={color}
-            onDeleteColor={handleDeleteColor}
-          />
-        );
+        return <Color key={color.id} color={color} onDeleteColor={handleDeleteColor} />;
       })}
     </>
   );
