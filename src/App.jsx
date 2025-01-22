@@ -9,7 +9,7 @@ function App() {
   const [colors, setColors] = useState(initialColors);
 
   function handleSubmitColor(newColor) {
-    setColors([...colors, { id: nanoid(), newColor }]);
+    setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
   return (
@@ -17,7 +17,7 @@ function App() {
       <h1>Theme Creator</h1>
       <ColorForm onSubmitColor={handleSubmitColor} />
 
-      {initialColors.map((color) => {
+      {colors.map((color) => {
         return <Color key={color.id} color={color} />;
       })}
     </>
