@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 export default function Color({ color, onDeleteColor }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [isEditVisible, setIsEditVisible] = useState(false);
 
   function handelClickDelete() {
     onDeleteColor(color.id); //deletes color
@@ -14,7 +15,10 @@ export default function Color({ color, onDeleteColor }) {
   }
 
   function handleCancel() {
-    setIsPopupVisible(false); //hides popup
+    setIsPopupVisible(false);
+  }
+  function handleEditClick() {
+    setIsEditVisible(true);
   }
 
   return (
@@ -41,6 +45,11 @@ export default function Color({ color, onDeleteColor }) {
       ) : (
         //delete button (doesnt really -> delete only makes popup)
         <button onClick={handleShowPopup}>DELETE</button>
+      )}
+      {isEditVisible ? (
+        <div>Here is a div!</div>
+      ) : (
+        <button onClick={handleEditClick}>EDIT</button>
       )}
     </div>
   );
