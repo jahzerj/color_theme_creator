@@ -7,18 +7,13 @@ import { nanoid } from 'nanoid';
 
 function App() {
   const [colors, setColors] = useState(initialColors);
-  const [popup, setPopup] = useState();
 
   function handleSubmitColor(newColor) {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
   function handleDeleteColor(idColorToRemove) {
-    const shouldRemove = confirm('are you sure you want to delete?');
-    if (shouldRemove) {
-      setColors(colors.filter((color) => color.id !== idColorToRemove));
-      console.log('clicking delete');
-    }
+    setColors(colors.filter((color) => color.id !== idColorToRemove));
   }
 
   return (
@@ -29,6 +24,7 @@ function App() {
       {colors.map((color) => {
         return <Color key={color.id} color={color} onDeleteColor={handleDeleteColor} />;
       })}
+      {colors.length === 0 && <p>No colors left! Start by adding your own.</p>}
     </>
   );
 }

@@ -1,9 +1,22 @@
-import "./Color.css";
+import './Color.css';
+import { useState } from 'react';
 
 export default function Color({ color, onDeleteColor }) {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   function handelClickDelete() {
-    onDeleteColor(color.id);
+    onDeleteColor(color.id); //deletes color
+    setIsPopupVisible(false); //hides popup
   }
+
+  function handleShowPopup() {
+    setIsPopupVisible(true); //shows popup
+  }
+
+  function handleCancel() {
+    setIsPopupVisible(false); //hides popup
+  }
+
   return (
     <div
       className="color-card"
@@ -15,7 +28,20 @@ export default function Color({ color, onDeleteColor }) {
       <h3 className="color-card-headline">{color.hex}</h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
-      <button onClick={handelClickDelete}>DELETE</button>
+      {isPopupVisible ? (
+        <div className="popup">
+          <p className="color-card-highlight">
+            Are you sure you want to delete {color.hex}?
+          </p>
+          {/* cancel delete -> hides popup  */}
+          <button onClick={handleCancel}>CANCEL</button>
+          {/* actual delete button -> deletes the color  */}
+          <button onClick={handelClickDelete}>DELETE</button>
+        </div>
+      ) : (
+        //delete button (doesnt really -> delete only makes popup)
+        <button onClick={handleShowPopup}>DELETE</button>
+      )}
     </div>
   );
 }
