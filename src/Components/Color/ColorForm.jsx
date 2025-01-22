@@ -1,42 +1,47 @@
-import { useState } from "react";
 import "./ColorForm.css";
+import ColorInput from "../ColorInput";
 
-export default function ColorForm() {
-  const [roleInput, setRoleInput] = useState("");
-  const [hexInput, setHexInput] = useState("");
-  const [contrastInput, setContrastInput] = useState("");
-
+export default function ColorForm({
+  onSubmitColor,
+  initialData = {
+    role: "name your color",
+    hex: "#a47864",
+    contrastText: "#FFFFFF",
+  },
+}) {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-
-    setRoleInput(roleInput);
-    setHexInput(hexInput);
-    setContrastInput(contrastInput);
+    onSubmitColor(data);
 
     event.target.reset();
     event.target.role.focus();
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="Role">
+    <form className="color-form" onSubmit={handleSubmit}>
+      <label htmlFor="role">
         Role
         <br />
-        <input type="text" name="role" id="Role" />
+        <input
+          type="text"
+          name="role"
+          id="role"
+          defaultValue={initialData.role}
+        />
       </label>
       <br />
-      <label htmlFor="Hex">
+      <label htmlFor="hex">
         Hex
         <br />
-        <input type="color" name="hex" id="Hex" value="#a47864" />
+        <ColorInput id="hex" defaultValue={initialData.hex} />
       </label>
       <br />
-      <label htmlFor="Contrast">
+      <label htmlFor="contrastText">
         Contrast Text
         <br />
-        <input type="color" name="contrast" id="Contrast" value="#ffffff" />
+        <ColorInput id="contrastText" defaultValue={initialData.contrastText} />
       </label>
       <br />
       <button>Add Color</button>
