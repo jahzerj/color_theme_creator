@@ -12,13 +12,24 @@ function App() {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
+  function handleDeleteColor(idColorToRemove) {
+    setColors(colors.filter((color) => color.id !== idColorToRemove));
+    console.log("clicking delete");
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
       <ColorForm onSubmitColor={handleSubmitColor} />
 
       {colors.map((color) => {
-        return <Color key={color.id} color={color} />;
+        return (
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={handleDeleteColor}
+          />
+        );
       })}
     </>
   );
