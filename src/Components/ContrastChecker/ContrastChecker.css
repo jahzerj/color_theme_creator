@@ -1,0 +1,20 @@
+.contrast-feedback {
+  font-weight: bold;
+}
+
+.contrast-feedback.yup {
+  background-color: green;
+}
+
+.contrast-feedback.kinda {
+  background-color: orange;
+}
+
+.contrast-feedback.nope {
+  background-color: red;
+}
+
+.contrast-feedback.error {
+  background-color: gray;
+  font-style: italic;
+}
