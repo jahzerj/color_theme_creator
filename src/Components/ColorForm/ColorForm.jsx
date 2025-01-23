@@ -8,6 +8,7 @@ export default function ColorForm({
     hex: '#a47864',
     contrastText: '#FFFFFF',
   },
+  buttonText,
 }) {
   function handleSubmit(event) {
     event.preventDefault();
@@ -38,7 +39,7 @@ export default function ColorForm({
         <ColorInput id="contrastText" defaultValue={initialData.contrastText} />
       </label>
       <br />
-      <button>Add Color</button>
+      <button>{buttonText}</button>
     </form>
   );
 }

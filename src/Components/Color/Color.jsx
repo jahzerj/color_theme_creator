@@ -1,9 +1,10 @@
 import './Color.css';
 import { useState } from 'react';
 
-export default function Color({ color, onDeleteColor }) {
+export default function Color({ color, onDeleteColor, colorForm }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
+  // const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
   function handelClickDelete() {
     onDeleteColor(color.id); //deletes color
@@ -19,6 +20,9 @@ export default function Color({ color, onDeleteColor }) {
   }
   function handleEditClick() {
     setIsEditVisible(true);
+  }
+  function handleCancelEditClick() {
+    setIsEditVisible(false);
   }
 
   return (
@@ -47,9 +51,13 @@ export default function Color({ color, onDeleteColor }) {
         <button onClick={handleShowPopup}>DELETE</button>
       )}
       {isEditVisible ? (
-        <div>Here is a div!</div>
+        <>
+          {colorForm} <button onClick={handleCancelEditClick}>CANCEL</button>{' '}
+        </>
       ) : (
-        <button onClick={handleEditClick}>EDIT</button>
+        <>
+          <button onClick={handleEditClick}>EDIT</button>
+        </>
       )}
     </div>
   );

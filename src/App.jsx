@@ -15,14 +15,31 @@ function App() {
   function handleDeleteColor(idColorToRemove) {
     setColors(colors.filter((color) => color.id !== idColorToRemove));
   }
+  function handleEditColor(idColorToEdit, role) {
+    setColors(
+      colors.map((color) => {
+        if (color.id === idColorToEdit) return { ...color, role };
+        return color;
+      })
+    );
+  }
 
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm onSubmitColor={handleSubmitColor} />
+      <ColorForm onSubmitColor={handleSubmitColor} buttonText={'Add Color'} />
 
       {colors.map((color) => {
-        return <Color key={color.id} color={color} onDeleteColor={handleDeleteColor} />;
+        return (
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={handleDeleteColor}
+            colorForm={
+              <ColorForm onSubmitColor={handleEditColor} buttonText={'Edit Color'} />
+            }
+          />
+        );
       })}
       {colors.length === 0 && <p>No colors left! Start by adding your own.</p>}
     </>
