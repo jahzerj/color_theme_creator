@@ -36,18 +36,8 @@ function App() {
           key={color.id}
           color={color}
           onDeleteColor={handleDeleteColor}
+          onUpdateColor={handleEditColor}
           // conditional color form that appears on edit button
-          colorForm={
-            <ColorForm
-              onSubmitColor={(updatedColor) => handleEditColor(color.id, updatedColor)}
-              buttonText="Update Color"
-              initialData={{
-                role: color.role,
-                hex: color.hex,
-                contrastText: color.contrastText,
-              }}
-            />
-          }
         />
       ))}
       {/*  when all cards are removed display a message*/}

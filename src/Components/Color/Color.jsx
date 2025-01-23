@@ -1,8 +1,8 @@
 import './Color.css';
 import { useState } from 'react';
-// import ColorForm from '../ColorForm/ColorForm';
+import ColorForm from '../ColorForm/ColorForm';
 
-export default function Color({ color, onDeleteColor, colorForm }) {
+export default function Color({ color, onDeleteColor, onUpdateColor }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
   // const [isDeleteVisible, setIsDeleteVisible] = useState(false);
@@ -27,6 +27,11 @@ export default function Color({ color, onDeleteColor, colorForm }) {
   }
   function handleCancelEditClick() {
     setIsEditVisible(false); // hide edit form
+  }
+
+  function handleEditSubmit(id, updatedColor) {
+    onUpdateColor(id, updatedColor);
+    setIsEditVisible(false);
   }
 
   return (
@@ -55,13 +60,26 @@ export default function Color({ color, onDeleteColor, colorForm }) {
         </div>
       ) : (
         //delete button (doesnt really -> delete only makes popup)
-        <button onClick={handleShowPopup}>DELETE</button>
+        !isEditVisible && (
+          <button className="popupdelete" onClick={handleShowPopup}>
+            DELETE
+          </button>
+        )
       )}
       {/* Is edit visible? (default false) -> make it visible*/}
       {isEditVisible ? (
         <>
           {/* Color form comes up, and cancel button, which hides edit*/}
-          {colorForm} <button onClick={handleCancelEditClick}>CANCEL</button>{' '}
+          <ColorForm
+            onSubmitColor={(updatedColor) => handleEditSubmit(color.id, updatedColor)}
+            buttonText="Update Color"
+            initialData={{
+              role: color.role,
+              hex: color.hex,
+              contrastText: color.contrastText,
+            }}
+          />{' '}
+          <button onClick={handleCancelEditClick}>CANCEL</button>{' '}
         </>
       ) : (
         <>
