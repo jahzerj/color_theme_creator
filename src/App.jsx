@@ -16,14 +16,31 @@ function App() {
     setColors(colors.filter((color) => color.id !== idColorToRemove));
   }
 
+  function handleEditColor(idColorToEdit, updatedColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === idColorToEdit ? { ...color, ...updatedColor } : color
+      )
+    ); //updates color by merging updated fields
+  }
+
   return (
     <>
       <h1>Theme Creator</h1>
-      <ColorForm onSubmitColor={handleSubmitColor} />
+      {/* original color form for adding color*/}
+      <ColorForm onSubmitColor={handleSubmitColor} buttonText="Add Color" />
 
-      {colors.map((color) => {
-        return <Color key={color.id} color={color} onDeleteColor={handleDeleteColor} />;
-      })}
+      {/*  renders each color*/}
+      {colors.map((color) => (
+        <Color
+          key={color.id}
+          color={color}
+          onDeleteColor={handleDeleteColor}
+          onUpdateColor={handleEditColor}
+          // conditional color form that appears on edit button
+        />
+      ))}
+      {/*  when all cards are removed display a message*/}
       {colors.length === 0 && <p>No colors left! Start by adding your own.</p>}
     </>
   );
