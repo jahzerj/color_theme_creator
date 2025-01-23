@@ -27,6 +27,7 @@ function App() {
   return (
     <>
       <h1>Theme Creator</h1>
+      {/* original color form */}
       <ColorForm onSubmitColor={handleSubmitColor} buttonText={'Add Color'} />
 
       {colors.map((color) => {
@@ -35,8 +36,9 @@ function App() {
             key={color.id}
             color={color}
             onDeleteColor={handleDeleteColor}
+            // conditional color form that appears on edit button
             colorForm={
-              <ColorForm onSubmitColor={handleEditColor} buttonText={'Edit Color'} />
+              <ColorForm onSubmitColor={handleEditColor} buttonText={'Edit Color'} intialValues={color.hex,color.contrastText,color.role}/>
             }
           />
         );
