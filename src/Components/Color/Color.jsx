@@ -1,28 +1,32 @@
 import './Color.css';
 import { useState } from 'react';
+// import ColorForm from '../ColorForm/ColorForm';
 
 export default function Color({ color, onDeleteColor, colorForm }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
   // const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
-  function handelClickDelete() {
-    onDeleteColor(color.id); //deletes color
-    setIsPopupVisible(false); //hides popup
-  }
-
+  //popup handling
   function handleShowPopup() {
     setIsPopupVisible(true); //shows popup
   }
 
-  function handleCancel() {
-    setIsPopupVisible(false);
+  function handleCancelPopup() {
+    setIsPopupVisible(false); //hide popup on cancel
   }
+  function handelClickDelete() {
+    onDeleteColor(color.id); //deletes color
+    setIsPopupVisible(false); //hides popup after delete
+  }
+
+  // handle form
+
   function handleEditClick() {
-    setIsEditVisible(true);
+    setIsEditVisible(true); //show edit form
   }
   function handleCancelEditClick() {
-    setIsEditVisible(false);
+    setIsEditVisible(false); // hide edit form
   }
 
   return (
@@ -36,13 +40,16 @@ export default function Color({ color, onDeleteColor, colorForm }) {
       <h3 className="color-card-headline">{color.hex}</h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
+
+      {/* Delete Button or Popup*/}
+      {/* If popup not visible (default false) -> make it visible*/}
       {isPopupVisible ? (
         <div className="popup">
           <p className="color-card-highlight">
             Are you sure you want to delete {color.hex}?
           </p>
           {/* cancel delete -> hides popup  */}
-          <button onClick={handleCancel}>CANCEL</button>
+          <button onClick={handleCancelPopup}>CANCEL</button>
           {/* actual delete button -> deletes the color  */}
           <button onClick={handelClickDelete}>DELETE</button>
         </div>
@@ -50,8 +57,10 @@ export default function Color({ color, onDeleteColor, colorForm }) {
         //delete button (doesnt really -> delete only makes popup)
         <button onClick={handleShowPopup}>DELETE</button>
       )}
+      {/* Is edit visible? (default false) -> make it visible*/}
       {isEditVisible ? (
         <>
+          {/* Color form comes up, and cancel button, which hides edit*/}
           {colorForm} <button onClick={handleCancelEditClick}>CANCEL</button>{' '}
         </>
       ) : (
