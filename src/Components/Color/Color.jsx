@@ -1,11 +1,11 @@
 import './Color.css';
 import { useState } from 'react';
 import ColorForm from '../ColorForm/ColorForm';
+import CopyToClipboard from '../CopyToClipboard/CopyToClipboard';
 
 export default function Color({ color, onDeleteColor, onUpdateColor }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
-  // const [isDeleteVisible, setIsDeleteVisible] = useState(false);
 
   //popup handling
   function handleShowPopup() {
@@ -42,7 +42,10 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
         color: color.contrastText,
       }}
     >
-      <h3 className="color-card-headline">{color.hex}</h3>
+      <h3 className="color-card-headline">
+        {color.hex}
+        <CopyToClipboard text={color.hex} />
+      </h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
 
