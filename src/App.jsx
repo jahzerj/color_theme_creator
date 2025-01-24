@@ -41,13 +41,6 @@ function App() {
       )
     );
   }
-  function handleEditColor(colorID, updatedColor) {
-    setColors(
-      colors.map((color) =>
-        color.id === colorId ? { ...color, ...updatedColor } : color
-      )
-    );
-  }
 
   function handleDeleteColor(colorId) {
     //remove the color id from the current theme
@@ -60,38 +53,64 @@ function App() {
     );
   }
 
+  function handleEditColor(colorID, updatedColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === colorId ? { ...color, ...updatedColor } : color
+      )
+    );
+  }
+
   function handleSubmitColor(newColor) {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
-  function handleDeleteColor(idColorToRemove) {
-    setColors(colors.filter((color) => color.id !== idColorToRemove));
-  }
+  // function handleDeleteColor(idColorToRemove) {
+  //   setColors(colors.filter((color) => color.id !== idColorToRemove));
+  // }
 
-  function handleEditColor(idColorToEdit, updatedColor) {
-    setColors(
-      colors.map((color) =>
-        color.id === idColorToEdit ? { ...color, ...updatedColor } : color
-      )
-    ); //updates color by merging updated fields
+  // function handleEditColor(idColorToEdit, updatedColor) {
+  //   setColors(
+  //     colors.map((color) =>
+  //       color.id === idColorToEdit ? { ...color, ...updatedColor } : color
+  //     )
+  //   ); //updates color by merging updated fields
+  // }
+
+  function handleSwitchTheme(themeId) {
+    setCurrentThemeId(themeId); //update the active theme ID
   }
 
   return (
     <>
+      <select
+        value={currentThemeId}
+        onChange={(e) => handleSwitchTheme(e.target.value)}
+      >
+        {themes.map((theme) => (
+          <option key={theme.id} value={theme.id}>
+            {theme.name}
+          </option>
+        ))}
+      </select>
+
       <h1>Theme Creator</h1>
       {/* original color form for adding color*/}
       <ColorForm onSubmitColor={handleSubmitColor} buttonText="Add Color" />
 
       {/*  renders each color*/}
-      {colors.map((color) => (
-        <Color
-          key={color.id}
-          color={color}
-          onDeleteColor={handleDeleteColor}
-          onUpdateColor={handleEditColor}
-          // conditional color form that appears on edit button
-        />
-      ))}
+      <div>
+        {currentColors.map((color) => (
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={() => handleDeleteColor(color.id)}
+            onEditColor={(updatedColor) =>
+              handleEditColor(color.id, updatedColor)
+            }
+          />
+        ))}
+      </div>
       {/*  when all cards are removed display a message*/}
       {colors.length === 0 && <p>No colors left! Start by adding your own.</p>}
     </>
