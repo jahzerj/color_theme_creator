@@ -5,6 +5,7 @@ import ColorForm from "./Components/ColorForm/ColorForm";
 import { nanoid } from "nanoid";
 import useLocalStorageState from "use-local-storage-state";
 import { initialThemes } from "./lib/themes";
+import { useState } from "react";
 
 function App() {
   const [themes, setThemes] = useLocalStorageState("themes", {
@@ -21,6 +22,43 @@ function App() {
   const currentColors = currentTheme.colors.map((colorId) =>
     colors.find((color) => color.id === colorId)
   ); // Map color IDs to full objects
+
+  function handleAddColor(newColor) {
+    const newColorObject = {
+      id: nanoid(), //generates id for the new color
+      ...newColor,
+    };
+
+    //Add the color to the global colors array
+    setColors([...colors, newColorObject]);
+
+    //Add the color's ID to the current theme's color list
+    setThemes(
+      themes.map((theme) =>
+        theme.id === currentThemeId
+          ? { ...theme, colors: [...theme.colors, newColorObject.id] }
+          : theme
+      )
+    );
+  }
+  function handleEditColor(colorID, updatedColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === colorId ? { ...color, ...updatedColor } : color
+      )
+    );
+  }
+
+  function handleDeleteColor(colorId) {
+    //remove the color id from the current theme
+    setThemes(
+      themes.map((theme) =>
+        theme.id === currentThemeId
+          ? { ...theme, colors: theme.colors.filter((id) => id !== colorId) }
+          : theme
+      )
+    );
+  }
 
   function handleSubmitColor(newColor) {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
