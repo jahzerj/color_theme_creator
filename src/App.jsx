@@ -51,6 +51,11 @@ function App() {
           : theme
       )
     );
+    setColors(colors.filter((color) => color.id !== colorId));
+  }
+
+  function handleDeleteColor(idColorToRemove) {
+    setColors(colors.filter((color) => color.id !== idColorToRemove));
   }
 
   function handleEditColor(colorID, updatedColor) {
@@ -65,17 +70,13 @@ function App() {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
   }
 
-  // function handleDeleteColor(idColorToRemove) {
-  //   setColors(colors.filter((color) => color.id !== idColorToRemove));
-  // }
-
-  // function handleEditColor(idColorToEdit, updatedColor) {
-  //   setColors(
-  //     colors.map((color) =>
-  //       color.id === idColorToEdit ? { ...color, ...updatedColor } : color
-  //     )
-  //   ); //updates color by merging updated fields
-  // }
+  function handleEditColor(idColorToEdit, updatedColor) {
+    setColors(
+      colors.map((color) =>
+        color.id === idColorToEdit ? { ...color, ...updatedColor } : color
+      )
+    ); //updates color by merging updated fields
+  }
 
   function handleSwitchTheme(themeId) {
     setCurrentThemeId(themeId); //update the active theme ID
