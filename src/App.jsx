@@ -1,15 +1,26 @@
-import { initialColors } from './lib/colors';
-import Color from './Components/Color/Color';
-import './App.css';
-import ColorForm from './Components/ColorForm/ColorForm';
-import { nanoid } from 'nanoid';
-import useLocalStorageState from 'use-local-storage-state';
-
+import { initialColors } from "./lib/colors";
+import Color from "./Components/Color/Color";
+import "./App.css";
+import ColorForm from "./Components/ColorForm/ColorForm";
+import { nanoid } from "nanoid";
+import useLocalStorageState from "use-local-storage-state";
+import { initialThemes } from "./lib/themes";
 
 function App() {
-  const [colors, setColors] = useLocalStorageState('colors', {
+  const [themes, setThemes] = useLocalStorageState("themes", {
+    defaultValue: initialThemes,
+  }); //array of themes
+
+  const [colors, setColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
-  });
+  }); //array of colors
+
+  const [currentThemeId, setCurrentThemeId] = useState("t1"); //selected theme ID
+
+  const currentTheme = themes.find((theme) => theme.id === currentThemeId); //find the current theme
+  const currentColors = currentTheme.colors.map((colorId) =>
+    colors.find((color) => color.id === colorId)
+  ); // Map color IDs to full objects
 
   function handleSubmitColor(newColor) {
     setColors([{ id: nanoid(), ...newColor }, ...colors]);
