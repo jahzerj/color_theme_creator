@@ -1,18 +1,60 @@
 .color-card {
-  margin: 0px 10px;
-  padding: 5px;
+  /* margin: 0px 10px;
+  padding: 5px; */
 }
 
 .color-card-headline {
+  /* display: inline; */
+  /* padding: 2px 6px;
+  background: black;
+  color: white; */
+}
+
+/* .color-card-highlight {
   display: inline;
   padding: 2px 6px;
   background: black;
   color: white;
+} */
+
+.color-bubble {
+  border-radius: 50%; /* Make the bubble circular */
+  display: flex;
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  text-align: center;
+  overflow: hidden; /* Ensure content doesn't overflow */
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add a shadow for depth */
+  transition: transform 0.3s ease; /* Add hover animation */
+  font-size: calc(
+    0.1 * var(--bubble-size)
+  ); /* Make font size proportional to bubble size */
+  line-height: 1.2;
+  text-align: center;
+  overflow: hidden;
+  white-space: normal;
+}
+
+.color-bubble:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+}
+
+.popup {
+  margin-top: 10px;
 }
 
 .color-card-highlight {
-  display: inline;
-  padding: 2px 6px;
-  background: black;
-  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.color-bubble-container {
+  display: flex; /* Enables Flexbox */
+  flex-wrap: wrap; /* Allows wrapping to the next row */
+  justify-content: space-evenly; /* Even spacing between bubbles */
+  align-items: center; /* Aligns bubbles vertically in the row */
+  gap: 20px; /* Adds spacing between rows and columns */
+  margin: 20px; /* Adds space around the entire container */
 }

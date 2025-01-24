@@ -1,0 +1,8 @@
+export default function hexToSize(hex) {
+  const sanitizedHex = hex.startsWith("#") ? hex.slice(1) : hex; // Remove the '#' if present
+  const r = parseInt(sanitizedHex.slice(0, 2), 16); // Extract Red
+  const g = parseInt(sanitizedHex.slice(2, 4), 16); // Extract Green
+  const b = parseInt(sanitizedHex.slice(4, 6), 16); // Extract Blue
+  const size = Math.floor((r + g + b) / 3); // Calculate average
+  return Math.max(50, Math.min(size, 200)); // Clamp size between 50 and 200
+}

@@ -1,12 +1,15 @@
-import './Color.css';
-import { useState } from 'react';
-import ColorForm from '../ColorForm/ColorForm';
-import CopyToClipboard from '../CopyToClipboard/CopyToClipboard';
-import ContrastChecker from '../ContrastChecker/ContrastChecker';
+import "./Color.css";
+import { useState } from "react";
+import ColorForm from "../ColorForm/ColorForm";
+import CopyToClipboard from "../CopyToClipboard/CopyToClipboard";
+import ContrastChecker from "../ContrastChecker/ContrastChecker";
+import hexToSize from "../../utils/hexToSize";
 
 export default function Color({ color, onDeleteColor, onUpdateColor }) {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [isEditVisible, setIsEditVisible] = useState(false);
+
+  const bubbleSize = hexToSize(color.hex);
 
   //popup handling
   function handleShowPopup() {
@@ -37,10 +40,13 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
 
   return (
     <div
-      className="color-card"
+      className="color-bubble"
       style={{
-        background: color.hex,
+        backgroundColor: color.hex,
         color: color.contrastText,
+        width: `${bubbleSize}px`,
+        height: `${bubbleSize}px`,
+        "--bubble-size": bubbleSize, // Pass bubble size as a CSS variable
       }}
     >
       <h3 className="color-card-headline">
@@ -49,7 +55,7 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
       </h3>
       <h4>{color.role}</h4>
       <p>contrast: {color.contrastText}</p>
-      <ContrastChecker hex={color.hex} contrastText={color.contrastText} />
+      {/* <ContrastChecker hex={color.hex} contrastText={color.contrastText} /> */}
 
       {/* Delete Button or Popup*/}
       {/* If popup not visible (default false) -> make it visible*/}
@@ -76,15 +82,17 @@ export default function Color({ color, onDeleteColor, onUpdateColor }) {
         <>
           {/* Color form comes up, and cancel button, which hides edit*/}
           <ColorForm
-            onSubmitColor={(updatedColor) => handleEditSubmit(color.id, updatedColor)}
+            onSubmitColor={(updatedColor) =>
+              handleEditSubmit(color.id, updatedColor)
+            }
             buttonText="Update Color"
             initialData={{
               role: color.role,
               hex: color.hex,
               contrastText: color.contrastText,
             }}
-          />{' '}
-          <button onClick={handleCancelEditClick}>CANCEL</button>{' '}
+          />
+          <button onClick={handleCancelEditClick}>CANCEL</button>
         </>
       ) : (
         <>

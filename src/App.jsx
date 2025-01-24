@@ -1,13 +1,12 @@
-import { initialColors } from './lib/colors';
-import Color from './Components/Color/Color';
-import './App.css';
-import ColorForm from './Components/ColorForm/ColorForm';
-import { nanoid } from 'nanoid';
-import useLocalStorageState from 'use-local-storage-state';
-
+import { initialColors } from "./lib/colors";
+import Color from "./Components/Color/Color";
+import "./App.css";
+import ColorForm from "./Components/ColorForm/ColorForm";
+import { nanoid } from "nanoid";
+import useLocalStorageState from "use-local-storage-state";
 
 function App() {
-  const [colors, setColors] = useLocalStorageState('colors', {
+  const [colors, setColors] = useLocalStorageState("colors", {
     defaultValue: initialColors,
   });
 
@@ -34,15 +33,17 @@ function App() {
       <ColorForm onSubmitColor={handleSubmitColor} buttonText="Add Color" />
 
       {/*  renders each color*/}
-      {colors.map((color) => (
-        <Color
-          key={color.id}
-          color={color}
-          onDeleteColor={handleDeleteColor}
-          onUpdateColor={handleEditColor}
-          // conditional color form that appears on edit button
-        />
-      ))}
+      <div className="color-bubble-container">
+        {colors.map((color) => (
+          <Color
+            key={color.id}
+            color={color}
+            onDeleteColor={handleDeleteColor}
+            onUpdateColor={handleEditColor}
+            // conditional color form that appears on edit button
+          />
+        ))}
+      </div>
       {/*  when all cards are removed display a message*/}
       {colors.length === 0 && <p>No colors left! Start by adding your own.</p>}
     </>
